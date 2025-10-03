@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Prédiction Temps de Livraison</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #2F4F4F;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h2 { color: #fff; margin-bottom: 20px; }
+    .sidebar a { 
+      color: white; 
+      text-decoration: none; 
+      margin: 10px 0; 
+      font-weight: bold; 
+      display: block; 
+    }
+    .sidebar a:hover { 
+      text-decoration: underline; 
+      color: #87CEFA;
+    }
+    /* Content */
+    .content { 
+      flex-grow: 1; 
+      padding: 40px; 
+      background: #f9f9f9; 
+    }
+    .form-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 { 
+      color: #2F4F4F; 
+      text-align: center; 
+      margin-bottom: 30px;
+    }
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+    input, select { 
+      width: 100%; 
+      padding: 10px; 
+      margin: 8px 0 20px 0; 
+      border-radius: 6px; 
+      border: 1px solid #ccc; 
+      font-size: 15px;
+    }
+    button { 
+      width: 100%;
+      padding: 14px; 
+      background-color: #4682B4; 
+      color: white; 
+      border: none; 
+      border-radius: 6px; 
+      font-size: 16px;
+      cursor: pointer; 
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover { 
+      background-color: #2F4F4F; 
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <a href="{{ url_for('index') }}">Accueil</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="form-card">
+      <h1>Prédiction du temps de livraison</h1>
+      <form action="{{ url_for('predict') }}" method="post">
+
+        <label>Heure</label>
+        <input type="number" name="hour" required min="0" max="23">
+
+        <label>Jour de la semaine (0=Lundi, 6=Dimanche)</label>
+        <input type="number" name="days_of_week" required min="0" max="6">
+
+        <label>Week-end ?</label>
+        <select name="is_weekend">
+          <option value="0">Non</option>
+          <option value="1">Oui</option>
+        </select>
+
+        <label>Total d'articles</label>
+        <input type="number" name="total_items" required min="0">
+
+        <label>Nombre d'articles distincts</label>
+        <input type="number" name="num_distinct_items" required min="0">
+
+        <label>Subtotal</label>
+        <input type="number" name="subtotal" required step="0.01" min="0">
+
+        <label>Prix minimum d'un article</label>
+        <input type="number" name="min_item_price" required step="0.01" min="0">
+
+        <label>Prix maximum d'un article</label>
+        <input type="number" name="max_item_price" required step="0.01" min="0">
+
+        <label>Partenaires en service</label>
+        <input type="number" name="total_onshift_partners" required min="0">
+
+        <label>Partenaires occupés</label>
+        <input type="number" name="total_busy_partners" required min="0">
+
+        <label>Commandes en attente</label>
+        <input type="number" name="total_outstanding_orders" required min="0">
+
+        <button type="submit">Prédire le temps de livraison</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
